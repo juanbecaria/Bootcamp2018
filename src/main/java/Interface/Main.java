@@ -8,12 +8,13 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main (String[] Arg) {
-        int op ;
-        boolean ban ;
+    public static void main(String[] Arg) {
+        int op;
+        boolean ban;
         ArrayList<Item> listOfItems = new ArrayList<Item>();
-        ArrayList<Order> listOfOrders = new ArrayList<Order> ();
-        ArrayList<Payment> listOfPayments = new  ArrayList<Payment>();
+        ArrayList<Order> listOfOrders = new ArrayList<Order>();
+        ArrayList<Payment> listOfPayments = new ArrayList<Payment>();
+        ArrayList<Client> listOfClients = new ArrayList<Client>();
         do {
 
             System.out.println("Menu");
@@ -37,7 +38,7 @@ public class Main {
                         System.out.println("Enter item Id: ");
                         String id = scanner.nextLine();
                         if (isNumber(id)) {
-                            Item newItem = new Item(Integer.parseInt(id),"");
+                            Item newItem = new Item(Integer.parseInt(id), "");
                             if (!(listOfItems.contains(newItem))) {
                                 do {
                                     System.out.println("Enter item Name: ");
@@ -49,101 +50,112 @@ public class Main {
                                     } else {
                                         System.out.println("Please enter a Name");
                                     }
-                                }while (!ban);
-                            }else {
+                                } while (!ban);
+                            } else {
                                 System.out.println("Item Id Already in use");
 
                             }
 
-                        }else {
+                        } else {
                             System.out.println("Please Input A Valid Number");
                         }
 
 
-                    }while(!ban);
+                    } while (!ban);
 
                     break;
                 case 2:
-                    System.out.println("Existing Items: ");
-                    for (Item i: listOfItems
-                         ) {
-                        System.out.println(i.toString());
+                    if (listOfItems.size() > 0) {
+                        System.out.println("Existing Items: ");
+                        for (Item i : listOfItems
+                                ) {
+                            System.out.println(i.toString());
+                        }
+                    } else {
+                        System.out.println("There are no items.");
                     }
                     break;
                 case 3:
-                    do {
-                        System.out.println("Enter Order Id: ");
-                        String id = scanner.nextLine();
-                        if (isNumber(id)) {
-                            Order newOrder = new Order(Integer.parseInt(id));
-                            if (!(listOfOrders.contains(newOrder))) {
-                                do {
-                                    ArrayList<Item> orderItems= new ArrayList<Item>();
-                                    System.out.println("Order Menu");
-                                    System.out.println("1.Add Item");
-                                    System.out.println("2.List Items");
-                                    System.out.println("2.Confirm Order");
-                                    System.out.println("3.Cancel Order");
-                                    op = Integer.parseInt(scanner.nextLine());
-                                    switch (op) {
-                                        case 1 :
-                                            System.out.println("Write item Id: ");
-                                            String idItem = scanner.nextLine();
-                                            if (isNumber(idItem)) {
-                                                Item it = new Item (Integer.parseInt(idItem),"");
-                                                if (listOfItems.contains(it)) {
-                                                    if (!orderItems.contains(it)) {
-                                                        orderItems.add(listOfItems.get(listOfItems.indexOf(it)));
+                    if (listOfItems.size() > 0) {
+                        do {
+                            System.out.println("Enter Order Id: ");
+                            String id = scanner.nextLine();
+                            if (isNumber(id)) {
+                                Order newOrder = new Order(Integer.parseInt(id));
+                                if (!(listOfOrders.contains(newOrder))) {
+                                    do {
+                                        ArrayList<Item> orderItems = new ArrayList<Item>();
+                                        System.out.println("Order Menu");
+                                        System.out.println("1.Add Item");
+                                        System.out.println("2.List Items");
+                                        System.out.println("2.Confirm Order");
+                                        System.out.println("3.Cancel Order");
+                                        op = Integer.parseInt(scanner.nextLine());
+                                        switch (op) {
+                                            case 1:
+                                                System.out.println("Write item Id: ");
+                                                String idItem = scanner.nextLine();
+                                                if (isNumber(idItem)) {
+                                                    Item it = new Item(Integer.parseInt(idItem), "");
+                                                    if (listOfItems.contains(it)) {
+                                                        if (!orderItems.contains(it)) {
+                                                            orderItems.add(listOfItems.get(listOfItems.indexOf(it)));
+                                                        } else {
+                                                            System.out.println("The Item is already part of the order");
+                                                        }
                                                     } else {
-                                                        System.out.println("The Item is already part of the order");
+                                                        System.out.println("Item does not exists");
                                                     }
-                                                }else {
-                                                    System.out.println("Item does not exists");
+                                                } else {
+                                                    System.out.println("Please enter a number");
                                                 }
-                                            } else {
-                                                System.out.println("Please enter a number");
-                                            }
-                                            break;
-                                        case 2 :
-                                            System.out.println("Available Items: ");
-                                            for (Item i: orderItems
-                                                    ) {
-                                                System.out.println(i.toString());
-                                            }
-                                            break;
-                                        case 3 :
-                                            if (orderItems.size() > 0) {
-                                                newOrder.setItems(orderItems);
-                                                listOfOrders.add(newOrder);
-                                            }
-                                            ban = true;
-                                            break;
-                                        case 4 :
-                                            ban = true;
-                                            break;
-                                    }
+                                                break;
+                                            case 2:
+                                                System.out.println("Available Items: ");
+                                                for (Item i : orderItems
+                                                        ) {
+                                                    System.out.println(i.toString());
+                                                }
+                                                break;
+                                            case 3:
+                                                if (orderItems.size() > 0) {
+                                                    newOrder.setItems(orderItems);
+                                                    listOfOrders.add(newOrder);
+                                                }
+                                                ban = true;
+                                                break;
+                                            case 4:
+                                                ban = true;
+                                                break;
+                                        }
 
-                                }while ((op == 3) || (op == 4));
-                            }else {
-                                System.out.println("Order Id: "+id +" already exists");
+                                    } while ((op == 3) || (op == 4));
+                                } else {
+                                    System.out.println("Order Id: " + id + " already exists");
 
+                                }
+
+                            } else {
+                                System.out.println("Please input a valid number");
                             }
 
-                        }else {
-                            System.out.println("Please input a valid number");
-                        }
 
-
-                    }while(!ban);
-
-
+                        } while (!ban);
+                    } else {
+                        System.out.println("No Items available");
+                    }
                     break;
                 case 4:
-                    System.out.println("Existing Orders: ");
-                    for (Order i: listOfOrders
-                            ) {
-                        System.out.println(i.toString());
+                    if (listOfOrders.size() > 0 ) {
+                        System.out.println("Existing Orders: ");
+                        for (Order i : listOfOrders
+                                ) {
+                            System.out.println(i.toString());
+                        }
+                    } else {
+                        System.out.println("There are no orders.");
                     }
+
                     break;
                 case 5:
                     break;
@@ -157,15 +169,15 @@ public class Main {
                     break;
 
             }
-        }while (op != 9);
+        } while (op != 9);
     }
 
-    private static boolean isNumber(String s){
+    private static boolean isNumber(String s) {
         try {
             Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         return true;
