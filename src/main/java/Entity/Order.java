@@ -41,18 +41,16 @@ public class Order implements Comparable<Order>{
         }
         final Order other = (Order) obj;
 
-        if (this.getId() != other.getId()) {
-            return false;
-        }
-        return true;
+        return this.getId() == other.getId();
     }
 
     @Override
     public String toString() {
         String str = "Order Id: "+ getId();
+        str += "\nItems:";
         for (Item i : getItems()
              ) {
-            str += i.toString();
+            str += "\n" + i.toString();
         }
         return str;
 

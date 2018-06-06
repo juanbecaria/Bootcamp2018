@@ -1,7 +1,7 @@
 package Interface;
 
 import Entity.*;
-import sun.tools.tree.NewArrayExpression;
+
 
 import java.util.Scanner;
 
@@ -13,8 +13,10 @@ public class Main {
         boolean ban;
         ArrayList<Item> listOfItems = new ArrayList<Item>();
         ArrayList<Order> listOfOrders = new ArrayList<Order>();
-        ArrayList<Payment> listOfPayments = new ArrayList<Payment>();
         ArrayList<Client> listOfClients = new ArrayList<Client>();
+        ArrayList<Payment> listOfPayments = new ArrayList<Payment>();
+        listOfItems.add(new Item(1,"Pepe"));
+        listOfItems.add(new Item(2,"lolo"));
         do {
 
             System.out.println("Menu");
@@ -83,13 +85,13 @@ public class Main {
                             if (isNumber(id)) {
                                 Order newOrder = new Order(Integer.parseInt(id));
                                 if (!(listOfOrders.contains(newOrder))) {
+                                    ArrayList<Item> orderItems = new ArrayList<Item>();
                                     do {
-                                        ArrayList<Item> orderItems = new ArrayList<Item>();
                                         System.out.println("Order Menu");
                                         System.out.println("1.Add Item");
                                         System.out.println("2.List Items");
-                                        System.out.println("2.Confirm Order");
-                                        System.out.println("3.Cancel Order");
+                                        System.out.println("3.Confirm Order");
+                                        System.out.println("4.Cancel Order");
                                         op = Integer.parseInt(scanner.nextLine());
                                         switch (op) {
                                             case 1:
@@ -111,7 +113,7 @@ public class Main {
                                                 }
                                                 break;
                                             case 2:
-                                                System.out.println("Available Items: ");
+                                                System.out.println("Items in the order: ");
                                                 for (Item i : orderItems
                                                         ) {
                                                     System.out.println(i.toString());
@@ -129,7 +131,7 @@ public class Main {
                                                 break;
                                         }
 
-                                    } while ((op == 3) || (op == 4));
+                                    } while ((op == 1) || (op == 2));
                                 } else {
                                     System.out.println("Order Id: " + id + " already exists");
 
