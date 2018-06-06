@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main (String[] Arg) {
-        int op = 0;
-        boolean ban = false;
+        int op ;
+        boolean ban ;
         ArrayList<Item> listOfItems = new ArrayList<Item>();
         ArrayList<Order> listOfOrders = new ArrayList<Order> ();
         ArrayList<Payment> listOfPayments = new  ArrayList<Payment>();
@@ -28,7 +28,6 @@ public class Main {
             System.out.println("9.Exit");
             Scanner scanner = new Scanner(System.in);
             ban = false;
-            op=0;
 
             op = Integer.parseInt(scanner.nextLine());
             switch (op) {
@@ -85,7 +84,6 @@ public class Main {
                                     System.out.println("2.List Items");
                                     System.out.println("2.Confirm Order");
                                     System.out.println("3.Cancel Order");
-                                    op = 0;
                                     op = Integer.parseInt(scanner.nextLine());
                                     switch (op) {
                                         case 1 :
@@ -147,22 +145,22 @@ public class Main {
                         System.out.println(i.toString());
                     }
                     break;
-                case 5: ;
+                case 5:
                     break;
-                case 6: ;
+                case 6:
                     break;
-                case 7: ;
+                case 7:
                     break;
-                case 8: ;
+                case 8:
                     break;
-                case 9: ;
+                case 9:
                     break;
 
             }
         }while (op != 9);
     }
 
-    public static boolean isNumber(String s){
+    private static boolean isNumber(String s){
         try {
             Integer.parseInt(s);
         } catch(NumberFormatException e) {
