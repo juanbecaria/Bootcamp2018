@@ -65,7 +65,7 @@ public class Main {
 
                     break;
                 case 2:
-                    System.out.println("Available Items: ");
+                    System.out.println("Existing Items: ");
                     for (Item i: listOfItems
                          ) {
                         System.out.println(i.toString());
@@ -140,7 +140,12 @@ public class Main {
 
 
                     break;
-                case 4: ;
+                case 4:
+                    System.out.println("Existing Orders: ");
+                    for (Order i: listOfOrders
+                            ) {
+                        System.out.println(i.toString());
+                    }
                     break;
                 case 5: ;
                     break;
