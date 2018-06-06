@@ -1,6 +1,6 @@
 package Entity;
 
-public class Payment {
+public class Payment implements Comparable<Payment> {
     private int Id;
     private Order order;
     private double amount;
@@ -27,5 +27,9 @@ public class Payment {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public int compareTo(Payment o) {
+        return this.getId() - o.getId();
     }
 }
