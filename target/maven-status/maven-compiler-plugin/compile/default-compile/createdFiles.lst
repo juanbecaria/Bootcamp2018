@@ -1,0 +1,5 @@
+Entity\Item.class
+Entity\Order.class
+Entity\Payment.class
+DAO\Connection.class
+Entity\Client.class
