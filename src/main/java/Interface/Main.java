@@ -1,11 +1,7 @@
 package Interface;
 
 import Entity.*;
-
-
-import java.util.Iterator;
 import java.util.Scanner;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -16,7 +12,7 @@ public class Main {
     public static void main(String[] Arg) {
         int op;
         boolean ban;
-//        addEntities();
+        addEntities();
 
         do {
 
@@ -29,8 +25,7 @@ public class Main {
             System.out.println("6.List Clients");
             System.out.println("7.Register Payment");
             System.out.println("8.List Payments");
-            System.out.println("9.Add Payment to Client");
-            System.out.println("10.Exit");
+            System.out.println("9.Exit");
             System.out.println("Select: ");
             Scanner scanner = new Scanner(System.in);
             ban = false;
@@ -216,7 +211,7 @@ public class Main {
                     }
                     break;
                 case 7:
-                    if (listOfOrders.size() >0) {
+                    if (listOfOrders.size() >0 && listOfClients.size() > 0 ) {
                         do {
                             System.out.println("Enter Payment Id: ");
                             String id = scanner.next();
@@ -234,9 +229,23 @@ public class Main {
                                                     System.out.println("Enter payment amount: ");
                                                     String amount = scanner.next();
                                                     if (isDouble(amount) && Double.parseDouble(amount) > 0) {
-                                                        newPayment = new Payment(Integer.parseInt(id), payOrder, Double.parseDouble(amount));
-                                                        listOfPayments.add(newPayment);
-                                                        ban = true;
+                                                        do {
+                                                            System.out.println("Enter client id: ");
+                                                            String clientId = scanner.next();
+                                                            if (isInt(clientId)) {
+                                                                Client c = new Client(Integer.parseInt(clientId));
+                                                                if (listOfClients.contains(c)) {
+
+                                                                    newPayment = new Payment(Integer.parseInt(id), payOrder, Double.parseDouble(amount));
+                                                                    listOfPayments.add(newPayment);
+                                                                    listOfClients.get(listOfClients.indexOf(c)).getPayments().add(newPayment);
+                                                                    ban = true;
+                                                                }
+                                                            } else {
+                                                                System.out.println("Please enter a valid client.");
+                                                            }
+                                                        } while (!ban);
+
                                                     } else {
                                                         System.out.println("Please enter a valid amount.");
                                                     }
@@ -271,59 +280,11 @@ public class Main {
                     }
                     break;
                 case 9:
-                    if (listOfPayments.size() > 0) {
-                        do {
-                            System.out.println("Enter Client Id: ");
-                            String id = scanner.next();
-                            if (isInt(id)) {
-                                Client newClient = new Client(Integer.parseInt(id));
-                                if ((listOfClients.contains(newClient))) {
-                                    do {
-                                        System.out.println("Enter Payment Id: ");
-                                        String paymentId = scanner.next();
-                                        if (isInt(paymentId)) {
-                                            Payment pay = new Payment(Integer.parseInt(paymentId));
-                                            if (listOfPayments.contains(pay) && !isClientPayment(pay)) {
-                                                pay = listOfPayments.get(listOfPayments.indexOf(pay));
-                                                if (listOfClients.get(listOfClients.indexOf(newClient)).getPayments() == null || listOfClients.get(listOfClients.indexOf(newClient)).getPayments().size()>0 ) {
-                                                    ArrayList<Payment> payments = new ArrayList<Payment>();
-                                                    payments.add(pay);
-                                                    listOfClients.get(listOfClients.indexOf(newClient)).setPayments(payments);
-                                                    ban=true;
-                                                } else {
-                                                    listOfClients.get(listOfClients.indexOf(newClient)).getPayments().add(pay);
-                                                    ban=true;
-                                                }
-                                            } else {
-                                                System.out.println("Payment doesn't exists or is already assigned to a client.");
-                                            }
-
-                                        } else {
-                                            System.out.println("Please enter a valid number");
-                                        }
-                                    } while (!ban);
-                                } else {
-                                    System.out.println("Client doesn't exists.");
-
-                                }
-
-                            } else {
-                                System.out.println("Please Input A Valid Number.");
-                            }
-
-
-                        } while (!ban);
-
-
-                }
-                else {
-                        System.out.println("Please register a payment first.");
-                    }
-
                     break;
 
+
             }
-        } while (op != 10);
+        } while (op != 9);
     }
 
     private static void addEntities() {
@@ -346,12 +307,7 @@ public class Main {
         pepe.getItems().add(listOfItems.get(2));
         pepe.getItems().add(listOfItems.get(4));
         listOfOrders.add(pepe);
-        Payment party = new Payment(1,listOfOrders.get(1),200.50);
-        listOfPayments.add(party);
-        party = new Payment(2,listOfOrders.get(2),256.66);
-        listOfPayments.add(party);
-        party = new Payment(3,listOfOrders.get(0),100.21);
-        listOfPayments.add(party);
+
         Client ramon = new Client (1,"Ramon","Baldez","Don Ramon");
         listOfClients.add(ramon);
     }
